@@ -1,0 +1,33 @@
+
+query fligthsRoute {
+ quer1: routes {
+    id
+    isDisabled
+    flights {
+      id
+      price
+      date
+      discount
+      route {
+        id
+      }
+    }
+  }
+  quer2: routes {
+    id
+    isDisabled
+    flights {
+      id
+      price
+      date
+      discount
+      route {
+        id
+      }
+    }
+  }
+}
+
+
+
+

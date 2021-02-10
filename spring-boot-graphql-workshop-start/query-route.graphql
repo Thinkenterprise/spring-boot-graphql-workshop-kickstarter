@@ -1,0 +1,6 @@
+query single{route(flightNumber:"LH7902") {id flightNumber isDisabled}}
+query parallel{route(flightNumber:"LH7902") {id flightNumber isDisabled} SecondRoute:route(flightNumber:"LH1602") {id flightNumber isDisabled}}
+query variable($flightNumber:String="LH7902"){route(flightNumber:$flightNumber) {id flightNumber isDisabled} SecondRoute:route(flightNumber:"LH1602") {id flightNumber}}
+query fragement($flightNumber:String="LH7902") {route(flightNumber:$flightNumber) {...routeDetails} SecondRoute:route(flightNumber:"LH1602") {...routeDetails}} fragment routeDetails on Route {id flightNumber isDisabled}
+
+	

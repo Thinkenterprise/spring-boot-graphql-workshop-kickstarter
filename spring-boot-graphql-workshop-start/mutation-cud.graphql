@@ -1,0 +1,6 @@
+mutation createRoute {createRoute(flightNumber: "LH410") {id flightNumber}}
+mutation update{updateRoute(id: 101 departure: "BER") {id departure}}
+mutation {updateRouteWithRouteInput(id: 102, routeInput: {departure: "BER" destination: "MUC"}) {id flightNumber departure destination}}
+mutation delete{deleteRoute(id: 103)}
+
+

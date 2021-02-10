@@ -1,0 +1,7 @@
+mutation updateRoute {
+  updateRoute(id: "101", departure:"MUC") {
+    id
+    flightNumber
+    departure
+  }
+}

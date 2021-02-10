@@ -1,0 +1,4 @@
+
+query {routes { id  flightNumber departure destination }}
+
+
