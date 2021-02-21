@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="java" deleted="false" description="async" enabled="true" name="async">public CompletableFuture&lt;Route&gt; route(String flightNumber) {
+		
+		return CompletableFuture.supplyAsync(() -&gt; routeRepository.findByFlightNumber(flightNumber));
+		
+	}</template><template autoinsert="true" context="java" deleted="false" description="cache access" enabled="true" name="cache access"> public CompletableFuture&lt;Float&gt; discount(Flight flight, DataFetchingEnvironment dataFetchingEnvironment) { 
+  
+    	DataLoader&lt;Long,Float&gt; discoutDataLoader = dataFetchingEnvironment.getDataLoader("discount");
+    	return discoutDataLoader.load(flight.getId());
+    	
+    } </template><template autoinsert="true" context="java" deleted="false" description="cache batch loader" enabled="true" name="cache batch loader">protected static Logger log = LoggerFactory.getLogger(DiscountService.class);
+	
+	private DiscountService discountService;
+	
+	public DiscountBatchLoader(DiscountService discountService) {
+		super();
+		this.discountService = discountService;
+	}
+
+	@Override
+	public CompletionStage&lt;List&lt;Float&gt;&gt; load(List&lt;Long&gt; ids) {	
+		log.debug("Discount for Flights " + ids );
+		return CompletableFuture.supplyAsync(() -&gt; discountService.getDiscountByIds(ids));
+	}</template><template autoinsert="true" context="java" deleted="false" description="cache data loader" enabled="true" name="cache data loader">public DataLoaderRegistry createDataLoaderRegisty() {
+		return new DataLoaderRegistry().register("discount", DataLoader.newDataLoader(new DiscountBatchLoader(discountService)));
+	}</template><template autoinsert="true" context="java" deleted="false" description="cache discount" enabled="true" name="cache discount"> public Float discount(Flight flight) {  	
+    	return discountService.getDiscount(flight.getId());
+    } </template><template autoinsert="true" context="java" deleted="false" description="context access" enabled="true" name="context access">	CustomGraphQLServletContext customGraphQLServletContext = (CustomGraphQLServletContext) dataFetchingEnvironment.getContext();
+		log.debug(customGraphQLServletContext.getUserId());</template><template autoinsert="true" context="java" deleted="false" description="context Custom" enabled="true" name="context custom">private String userId;
+	private DefaultGraphQLServletContext defaultGraphQLServletContext;
+	
+	public CustomGraphQLServletContext() {
+		super();
+	}
+	
+	public CustomGraphQLServletContext(String userId, DefaultGraphQLServletContext defaultGraphQLServletContext) {
+		super();
+		this.userId = userId;
+		this.defaultGraphQLServletContext = defaultGraphQLServletContext;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	@Override
+	public Optional&lt;Subject&gt; getSubject() {
+		return defaultGraphQLServletContext.getSubject();
+	}
+
+	@Override
+	public Optional&lt;DataLoaderRegistry&gt; getDataLoaderRegistry() {
+		return defaultGraphQLServletContext.getDataLoaderRegistry();
+	}
+
+	@Override
+	public List&lt;Part&gt; getFileParts() {
+		return defaultGraphQLServletContext.getFileParts();
+	}
+
+	@Override
+	public Map&lt;String, List&lt;Part&gt;&gt; getParts() {
+		return defaultGraphQLServletContext.getParts();
+	}
+
+	@Override
+	public HttpServletRequest getHttpServletRequest() {
+		
+		return defaultGraphQLServletContext.getHttpServletRequest();
+	}
+
+	@Override
+	public HttpServletResponse getHttpServletResponse() {
+		return defaultGraphQLServletContext.getHttpServletResponse();
+	}
+</template><template autoinsert="true" context="java" deleted="false" description="context custom builder" enabled="true" name="context custom builder">protected static Logger log = LoggerFactory.getLogger(CustomGraphQLServletContextBuilder.class);
+
+	
+	
+	DefaultGraphQLServletContext defaultGraphQLServletContext;
+	
+	@Override
+	public GraphQLContext build(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+		
+		String userId = httpServletRequest.getHeader("user_id");
+	    defaultGraphQLServletContext = DefaultGraphQLServletContext.createServletContext()
+				    											   .with(httpServletRequest)
+				    											   .with(httpServletResponse)
+				    											   .build();
+		
+		return new CustomGraphQLServletContext(userId, defaultGraphQLServletContext);	
+	}
+
+	public DefaultGraphQLServletContext getDefaultGraphQLServletContext() {
+		return defaultGraphQLServletContext;
+	}
+
+	public void setDefaultGraphQLServletContext(DefaultGraphQLServletContext defaultGraphQLServletContext) {
+		this.defaultGraphQLServletContext = defaultGraphQLServletContext;
+	}
+
+	@Override
+	public GraphQLContext build(Session session, HandshakeRequest handshakeRequest) {
+		throw new IllegalStateException("Unsupported Web Socket build method called in CustomGraphQLServletContextBuilder");
+	}
+	
+	@Override
+	public GraphQLContext build() {	
+		throw new IllegalStateException("Unsupported non network build method called in CustomGraphQLServletContextBuilder");
+	}</template><template autoinsert="true" context="java" deleted="false" description="context custom configuration" enabled="true" name="context custom configuration">@Bean
+	public GraphQLServletContextBuilder graphQLServletContextBuilder() {
+		return new CustomGraphQLServletContextBuilder();
+	}
+</template><template autoinsert="true" context="java" deleted="false" description="exception handler" enabled="true" name="exceptions handler">if(!exception)
+		return routeRepository.findAll();
+	else 
+		throw new RouteException("RouteException: Route Data Fetching doesent work");
+	
+	
+	@Value("{route.exception}")
+	private Boolean exception;
+	
+	@ExceptionHandler(RouteException.class)
+	public GraphQLError exception(RouteException routeException) {
+		return new CustomGraphQLError("CustomGraphQLError: Exception Handler");
+	}</template><template autoinsert="true" context="java" deleted="false" description="mutation create, update, delete" enabled="true" name="mutation create, update, delete">    private RouteRepository routeRepository;
+
+
+    @Autowired
+    public RootMutationResolver(RouteRepository routeRepository) {
+        this.routeRepository=routeRepository;	 
+    }
+ 
+    public Route createRoute(String flightNumber) {
+        Route route = new Route(flightNumber);
+        routeRepository.save(route);   
+        return route; 
+    }
+
+    </template><template autoinsert="true" context="java" deleted="false" description="query inheritance" enabled="true" name="query inheritance">
+    private EmployeeRepository employeeRepository;
+    private RouteRepository routeRepository;
+   
+    @Autowired
+    public FlightQueryResolver(RouteRepository routeRepository,
+    						   EmployeeRepository employeeRepository) {
+        this.employeeRepository=employeeRepository;
+        this.routeRepository=routeRepository;
+        
+    }
+
+    public List&lt;Employee&gt; employees(Flight flight) {
+        return employeeRepository.findByFlight(flight);
+    }
+    
+    public Route route(Flight flight) {
+    	return routeRepository.findById(flight.getRoute().getId()).get();
+    }</template><template autoinsert="true" context="java" deleted="false" description="query inheritance configuration" enabled="true" name="query inheritance configuration">	@Bean
+	public SchemaParserDictionary schemaParserDictionary() {
+		return new SchemaParserDictionary().add(Pilot.class);
+	}</template><template autoinsert="true" context="java" deleted="false" description="query relation" enabled="true" name="query relation"> private FlightRepository flightRepository;
+    private RouteRepository routeRepository;
+
+    @Autowired
+    public RouteQueryResolver(RouteRepository routeRepository,
+    					      FlightRepository flightRepository) {
+    	this.routeRepository=routeRepository;
+        this.flightRepository=flightRepository;
+    }
+
+    public List&lt;Flight&gt; flights(Route route) {
+        return flightRepository.findByRoute(route);	
+    }
+
+    public Route route(Route route) {
+    	return routeRepository.findByRoute(route);
+    }
+</template><template autoinsert="true" context="java" deleted="false" description="query relation and hierarchically" enabled="true" name="query relation and hierarchically"> private FlightRepository flightRepository;
+    private RouteRepository routeRepository;
+
+    @Autowired
+    public RouteQueryResolver(RouteRepository routeRepository,
+    					      FlightRepository flightRepository) {
+    	this.routeRepository=routeRepository;
+        this.flightRepository=flightRepository;
+    }
+
+    public List&lt;Flight&gt; flights(Route route) {
+        return flightRepository.findByRoute(route);	
+    }
+
+    public Route route(Route route) {
+    	return routeRepository.findByRoute(route);
+    }
+</template><template autoinsert="true" context="java" deleted="false" description="query one route with parameter" enabled="true" name="query route">public Route route(String flightNumber) {
+		return routeRepository.findByFlightNumber(flightNumber);
+	}</template><template autoinsert="true" context="java" deleted="false" description="query all routes" enabled="true" name="query routes">protected static Logger log = LoggerFactory.getLogger(RootQueryResolver.class);
+	
+	private RouteRepository routeRepository; 
+	
+	@Autowired
+	public RootQueryResolver(RouteRepository routeRepository) {
+		this.routeRepository=routeRepository;	
+	}
+	
+	public List&lt;Route&gt; routes() {
+		return routeRepository.findAll();
+	} </template><template autoinsert="true" context="java" deleted="false" description="subscription Publisher" enabled="true" name="subscription Publisher">private Flux&lt;Route&gt; publisher;
+	private FluxSink&lt;Route&gt; emitter;
+	
+	public ProjectReactorRouteSubscriptionNotifier() {
+		
+		Flux&lt;Route&gt; createdPublisher = Flux.create(emitter -&gt; {
+			this.emitter=emitter;
+		}, FluxSink.OverflowStrategy.BUFFER);
+		
+		ConnectableFlux&lt;Route&gt; connectableFlux = createdPublisher.share().publish();
+		connectableFlux.connect();
+
+		publisher = Flux.from(connectableFlux);
+	}
+	
+	@Override
+	public void emit(Route route) {
+		emitter.next(route);
+	}
+
+	@Override
+	public Publisher&lt;Route&gt; getPublisher() {
+		return publisher;
+	}</template><template autoinsert="true" context="java" deleted="false" description="subscription register" enabled="true" name="subscription register">private RouteSubscriptionNotifier routeSubscriptionNotifier;
+
+	@Autowired
+	public RootSubscriptionResolver(RouteSubscriptionNotifier routeUpdatePublisher) {
+		this.routeSubscriptionNotifier = routeUpdatePublisher;
+	}
+
+	public Publisher&lt;Route&gt; registerRouteCreated() {
+		return routeSubscriptionNotifier.getPublisher();
+	}</template><template autoinsert="true" context="java" deleted="false" description="test query" enabled="true" name="test query">@Autowired
+    private GraphQLTestTemplate graphQLTestTemplate;
+
+    @Test
+    public void routeQueryroutes() throws IOException { 
+        GraphQLResponse response  = graphQLTestTemplate.postForResource("routes.graphql");
+        assertNotNull(response);
+        assertTrue(response.isOk());
+        assertEquals("101", response.get(".data.routes[0].id"));
+    }</template><template autoinsert="true" context="java" deleted="false" description="exception error" enabled="true" name="exception error">private static final long serialVersionUID = -6780513777815584903L;&#13;
+&#13;
+    private String message;&#13;
+&#13;
+    public CustomGraphQLError() {&#13;
+        super();&#13;
+    } &#13;
+&#13;
+    public CustomGraphQLError(String message) {&#13;
+        this.message = message;&#13;
+    }&#13;
+&#13;
+    @Override&#13;
+    public String getMessage() {&#13;
+        return this.message;&#13;
+    }&#13;
+&#13;
+    @Override&#13;
+    public List&lt;SourceLocation&gt; getLocations() {&#13;
+        return null;&#13;
+    }&#13;
+&#13;
+	@Override&#13;
+	public ErrorType getErrorType() {&#13;
+		return ErrorType.ExecutionAborted;&#13;
+	} </template><template autoinsert="true" context="java" deleted="false" description="test query" enabled="true" name="test query">&#13;
+    @Autowired&#13;
+    private GraphQLTestTemplate graphQLTestTemplate;&#13;
+&#13;
+    @Test&#13;
+    public void routeQueryroutes() throws IOException { &#13;
+        GraphQLResponse response  = graphQLTestTemplate.postForResource("routes.graphql");&#13;
+        assertNotNull(response);&#13;
+        assertTrue(response.isOk());&#13;
+        assertEquals("101", response.get(".data.routes[0].id"));&#13;
+    }</template><template autoinsert="true" context="java" deleted="false" description="security no" enabled="true" name="security no">@Override&#13;
+	protected void configure(HttpSecurity http) throws Exception {&#13;
+		http.csrf().disable().authorizeRequests().anyRequest().permitAll();&#13;
+	} </template><template autoinsert="true" context="java" deleted="false" description="security basic" enabled="true" name="security basic">@Override&#13;
+      protected void configure(HttpSecurity http) throws Exception {&#13;
+        http&#13;
+            .csrf().disable()&#13;
+            .authorizeRequests().anyRequest().authenticated()&#13;
+            .and().httpBasic();   &#13;
+      }&#13;
+    &#13;
+      @Override&#13;
+      protected void configure(AuthenticationManagerBuilder auth) throws Exception {&#13;
+        auth.inMemoryAuthentication()&#13;
+            .withUser("user")&#13;
+            .password(passwordEncoder().encode("password"))&#13;
+            .roles("read");&#13;
+      }&#13;
+    &#13;
+      @Bean&#13;
+      PasswordEncoder passwordEncoder() {&#13;
+        return new BCryptPasswordEncoder();&#13;
+      }</template><template autoinsert="true" context="java" deleted="false" description="mutation update" enabled="true" name="mutation update">public Route updateRoute(Long id, String departure) {&#13;
+		Route route = routeRepository.findById(id).get();&#13;
+		route.setDeparture(departure);&#13;
+		routeRepository.save(route);&#13;
+		return route;&#13;
+	}</template><template autoinsert="true" context="java" deleted="false" description="mutation delete" enabled="true" name="mutation delete">public Boolean isDeleteRoute(Long id) {&#13;
+		routeRepository.deleteById(id);&#13;
+		return true;&#13;
+	}</template><template autoinsert="true" context="java" deleted="false" description="mutation update input" enabled="true" name="mutation update input">public Route updateRouteWithRouteInput(Long id, @Valid RouteInput routeInput) {&#13;
+		Route route = routeRepository.findById(id).get();&#13;
+		route.setDeparture(routeInput.getDeparture());&#13;
+		route.setDestination(routeInput.getDestination());&#13;
+		routeRepository.save(route);&#13;
+		return route;&#13;
+	}</template><template autoinsert="true" context="java" deleted="false" description="custom types" enabled="true" name="custom types">@Bean&#13;
+	public SchemaParserDictionary schemaParserDictionary() {&#13;
+		return new SchemaParserDictionary().add(Pilot.class);&#13;
+	}</template></templates>

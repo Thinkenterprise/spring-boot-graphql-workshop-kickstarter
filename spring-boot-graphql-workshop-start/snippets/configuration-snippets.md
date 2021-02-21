@@ -12,24 +12,11 @@ graphql:
     subscriptions:
       websocket:
         path: /subscriptions
-
-
+        
 profiles:
     active: reactor 
 
 
-
-
-
-    graphql:
-  tools:
-    schemaLocationPattern: "**/*.graphql"
-  servlet:
-    mapping: /graphql
-    enabled: true
-    subscriptions:
-      websocket:
-        path: /subscriptions
 
 ## Exceptions 
 
@@ -43,14 +30,9 @@ graphql:
 
 ## Security
 
-### DDOS 
 
-graphql:
-  servlet:
-    graphql.servlet.maxQueryDepth: 100
-    graphql.servlet.maxQueryComplexity: 100 
  
- ### Basisc Authentication 
+### Basisc Authentication 
  spring:
   profiles:
     active: security, basic
@@ -60,18 +42,36 @@ graphql:
  spring:
   profiles:
     active: security
+    
+  security:
+    oauth2:
+      resourceserver:
+        jwt: 
+          public-key-location: public-key.txt
+          
 
 ## CORS
  corsEnabled: true
     cors:
       allowed-origins: http://some.domain.com
 
+### DDOS 
 
+graphql:
+  servlet:
+    maxQueryDepth: 100
+    maxQueryComplexity: 100 
+    
 ## Actuator
-## Actuator Enable GraphQL 
+ 
 management:
   endpoints: 
     enabled-by-default: true
     web:
       exposure:
         include: "*"
+        
+## Actuator Enable GraphQL
+   tracingEnabled: true
+   actuator-metrics: true
+        

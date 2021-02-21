@@ -40,10 +40,11 @@
 			
 </dependency>
 
-    <dependency>
+<dependency>
 	<groupId>com.graphql-java-kickstart</groupId>
 	<artifactId>graphql-spring-boot-starter-test</artifactId>
 	<version>8.1.1</version>
+	<scope>test</scope>
 </dependency>
 
 ## Metrics
