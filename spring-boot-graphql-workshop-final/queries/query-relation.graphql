@@ -1,0 +1,5 @@
+query fligths{routes{id isDisabled flights{ id price}}}
+query fligthsRoute{routes{id isDisabled flights{ id price route{id}}}}
+query routeRoute{routes{id route{id flightNumber}}}
+
+
