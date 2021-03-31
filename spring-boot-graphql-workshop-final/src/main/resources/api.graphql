@@ -1,21 +1,23 @@
+directive @uppercase on FIELD_DEFINITION
+
+scalar LocalDate
+
 schema {
 	query: Query
 	mutation: Mutation
 	subscription: Subscription
 }
 
-scalar LocalDate
-
 type Query { 
-	routes: [Route]
+	routes(page: Int = 0, size: Int = 1): [Route]
 	route(flightNumber: String!): Route
 }
 
 type Mutation {
 	createRoute(flightNumber: String!): Route
 	deleteRoute(id: ID!): Boolean
-	updateRouteWithRouteInput(id: ID!, routeInput: RouteInput) : Route
 	updateRoute(id: ID!, departure: String!): Route
+	updateRouteWithRouteInput(id: ID!, routeInput: RouteInput) : Route
 }
 
 type Subscription {
@@ -27,14 +29,17 @@ input RouteInput {
 	destination: String
 }
 
+# Route documentation First Line 
+# Route documentation Second Line
 type Route {
+    # id documentation 
 	id: ID!
-	flightNumber: String!
-	departure: String
+	flightNumber: String! @uppercase
+	departure: String @deprecated(reason: "Use `newField`.")
 	destination: String
 	isDisabled: Boolean
 	flights: [Flight!]
-	route: Route	
+	route: Route 
 }
 
 type Flight {
@@ -45,7 +50,6 @@ type Flight {
 	date: LocalDate!
 	employees: [Employee!]
 }
-
 
 interface Employee {
 	id: ID!
@@ -62,6 +66,15 @@ type Pilot implements Employee {
 	firstName: String! 
 	role: EmployeRole!
 	certificateNumber: String 
+}
+
+type Attendant implements Employee {
+	id: ID!
+	staffNumber: String!
+	lastName: String! 
+	firstName: String! 
+	role: EmployeRole!
+	rank: Int 
 }
 
 enum EmployeRole {

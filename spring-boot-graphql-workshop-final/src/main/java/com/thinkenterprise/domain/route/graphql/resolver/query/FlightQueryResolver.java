@@ -7,11 +7,11 @@ import org.dataloader.DataLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.thinkenterprise.domain.employee.jpa.model.Employee;
-import com.thinkenterprise.domain.employee.jpa.model.EmployeeRepository;
-import com.thinkenterprise.domain.route.jpa.model.Flight;
-import com.thinkenterprise.domain.route.jpa.model.Route;
-import com.thinkenterprise.domain.route.jpa.model.repository.RouteRepository;
+import com.thinkenterprise.domain.employee.model.jpa.Employee;
+import com.thinkenterprise.domain.employee.model.jpa.EmployeeRepository;
+import com.thinkenterprise.domain.route.model.jpa.Flight;
+import com.thinkenterprise.domain.route.model.jpa.Route;
+import com.thinkenterprise.domain.route.model.jpa.RouteRepository;
 import com.thinkenterprise.domain.route.service.DiscountService;
 
 import graphql.kickstart.tools.GraphQLResolver;

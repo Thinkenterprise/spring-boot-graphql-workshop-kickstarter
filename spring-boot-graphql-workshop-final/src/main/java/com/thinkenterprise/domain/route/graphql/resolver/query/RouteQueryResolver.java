@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.thinkenterprise.domain.route.jpa.model.Flight;
-import com.thinkenterprise.domain.route.jpa.model.Route;
-import com.thinkenterprise.domain.route.jpa.model.repository.FlightRepository;
-import com.thinkenterprise.domain.route.jpa.model.repository.RouteRepository;
+import com.thinkenterprise.domain.route.model.jpa.Flight;
+import com.thinkenterprise.domain.route.model.jpa.FlightRepository;
+import com.thinkenterprise.domain.route.model.jpa.Route;
+import com.thinkenterprise.domain.route.model.jpa.RouteRepository;
 
 import graphql.kickstart.tools.GraphQLResolver;
 
@@ -36,7 +36,7 @@ public class RouteQueryResolver implements GraphQLResolver<Route> {
     }
 
     public List<Flight> flights(Route route) {
-        return flightRepository.findByRoute(route);	
+    	return flightRepository.findByRoute(route);	
     }
 
     public Route route(Route route) {

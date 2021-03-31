@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.thinkenterprise.domain.route.graphql.publisher.RouteSubscriptionNotifier;
-import com.thinkenterprise.domain.route.jpa.model.Route;
+import com.thinkenterprise.domain.route.model.jpa.Route;
 
 import graphql.kickstart.tools.GraphQLSubscriptionResolver;
 

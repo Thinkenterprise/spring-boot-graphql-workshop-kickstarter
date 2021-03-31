@@ -1,4 +1,4 @@
-package com.thinkenterprise.domain.route.jpa.model;
+package com.thinkenterprise.domain.route.model.jpa;
 
 import java.util.Set;
 
@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import com.thinkenterprise.domain.jpa.AbstractEntity;
+import com.thinkenterprise.domain.model.jpa.AbstractEntity;
 
 /**  
 * GraphQL Spring Boot Training 

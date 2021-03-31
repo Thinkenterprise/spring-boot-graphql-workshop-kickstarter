@@ -1,4 +1,4 @@
-package com.thinkenterprise.domain.employee.jpa.model;
+package com.thinkenterprise.domain.employee.model.jpa;
 
 /**  
 * GraphQL Spring Boot Training 

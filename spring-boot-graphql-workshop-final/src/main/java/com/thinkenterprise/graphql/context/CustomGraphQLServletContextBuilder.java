@@ -1,4 +1,4 @@
-package com.thinkenterprise.domain.route.graphql.context;
+package com.thinkenterprise.graphql.context;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.thinkenterprise.domain.route.graphql.performance.DiscountBatchLoader;
 import com.thinkenterprise.domain.route.service.DiscountService;
+import com.thinkenterprise.graphql.data.DiscountBatchLoader;
 
 import graphql.kickstart.execution.context.GraphQLContext;
 import graphql.kickstart.servlet.context.DefaultGraphQLServletContext;

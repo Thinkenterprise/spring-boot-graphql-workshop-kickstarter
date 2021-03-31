@@ -9,3 +9,4 @@ insert into flight(id, route_id, price, date) values(3, 103, '60.45', '2018-08-1
 
 
 insert into pilot(id, flight_id, staff_Number, last_Name, first_Name, role, certificate_Number) values (1, 1, 'P234238','Fred','Flieger','PILOT', '123456');
+insert into attendant(id, flight_id, staff_Number, last_Name, first_Name, role, rank) values (2, 1, 'S77667','Sarah','Stewardess','ATTENDANT', 2);

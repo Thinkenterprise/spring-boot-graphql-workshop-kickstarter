@@ -1,4 +1,4 @@
-package com.thinkenterprise.domain.employee.jpa.model;
+package com.thinkenterprise.domain.employee.model.jpa;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import com.thinkenterprise.domain.route.jpa.model.Flight;
-import com.thinkenterprise.domain.route.jpa.model.Route;
+import com.thinkenterprise.domain.route.model.jpa.Flight;
+import com.thinkenterprise.domain.route.model.jpa.Route;
 
 /**  
 * GraphQL Spring Boot Training 

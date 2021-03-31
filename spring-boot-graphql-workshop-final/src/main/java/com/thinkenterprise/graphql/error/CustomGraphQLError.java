@@ -1,4 +1,4 @@
-package com.thinkenterprise.domain.route.graphql.error;
+package com.thinkenterprise.graphql.error;
 
 import graphql.ErrorType;
 import graphql.GraphQLError;

@@ -1,4 +1,4 @@
-package com.thinkenterprise.domain.route.graphql.context;
+package com.thinkenterprise.graphql.context;
 
 import java.util.List;
 

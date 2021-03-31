@@ -3,7 +3,11 @@ package com.thinkenterprise;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import graphql.GraphQL;
+import graphql.GraphQLContext;
 import graphql.execution.instrumentation.Instrumentation;
+import graphql.parser.Parser;
+import graphql.schema.DataFetchingEnvironment;
 
 /**  
 * GraphQL Spring Boot Training 
@@ -16,7 +20,7 @@ import graphql.execution.instrumentation.Instrumentation;
 
 @SpringBootApplication
 public class GraphQlSpringBootApplication {
-		
+	
 	public static void main(String[] args) {		
 		SpringApplication.run(GraphQlSpringBootApplication.class, args);	
 	}

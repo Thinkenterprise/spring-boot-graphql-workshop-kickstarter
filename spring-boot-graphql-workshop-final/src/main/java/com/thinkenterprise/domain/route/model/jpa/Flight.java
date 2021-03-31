@@ -1,4 +1,4 @@
-package com.thinkenterprise.domain.route.jpa.model;
+package com.thinkenterprise.domain.route.model.jpa;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -10,8 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import com.thinkenterprise.domain.employee.jpa.model.Employee;
-import com.thinkenterprise.domain.jpa.AbstractEntity;
+import com.thinkenterprise.domain.employee.model.jpa.Employee;
+import com.thinkenterprise.domain.model.jpa.AbstractEntity;
 
 /**  
 * GraphQL Spring Boot Training 

@@ -3,7 +3,7 @@ package com.thinkenterprise.domain.route.graphql.publisher;
 import org.reactivestreams.Publisher;
 import org.springframework.stereotype.Component;
 
-import com.thinkenterprise.domain.route.jpa.model.Route;
+import com.thinkenterprise.domain.route.model.jpa.Route;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;

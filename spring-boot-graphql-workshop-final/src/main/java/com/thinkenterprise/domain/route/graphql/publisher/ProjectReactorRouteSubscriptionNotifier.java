@@ -2,7 +2,7 @@
 
 import org.reactivestreams.Publisher;
 
-import com.thinkenterprise.domain.route.jpa.model.Route;
+import com.thinkenterprise.domain.route.model.jpa.Route;
 
 import reactor.core.publisher.ConnectableFlux;
 import reactor.core.publisher.Flux;

@@ -1,4 +1,4 @@
-package com.thinkenterprise.domain.route.graphql.performance;
+package com.thinkenterprise.graphql.data;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

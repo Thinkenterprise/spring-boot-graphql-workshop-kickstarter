@@ -1,13 +1,13 @@
 
-package com.thinkenterprise.domain.route.jpa.model.repository;
+package com.thinkenterprise.domain.route.model.jpa;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-
-import com.thinkenterprise.domain.route.jpa.model.Route;
 
 /**  
 * GraphQL Spring Boot Training 
@@ -28,6 +28,8 @@ public interface RouteRepository extends CrudRepository<Route, Long>{
 	
 	@Query( "select r from Route r where r.parent = :route")
 	Route findByRoute(@Param("route") Route route);
+	
+	Page<Route> findAll(Pageable pageable);
 	
 	
 }

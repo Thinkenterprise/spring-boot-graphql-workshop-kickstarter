@@ -1,4 +1,4 @@
-package com.thinkenterprise.domain.jpa;
+package com.thinkenterprise.domain.model.jpa;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

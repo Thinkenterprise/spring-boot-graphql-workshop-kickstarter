@@ -1,5 +1,6 @@
 package com.thinkenterprise.domain.route.graphql.resolver.mutation;
 
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +8,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.thinkenterprise.domain.route.graphql.publisher.ProjectReactorRouteSubscriptionNotifier;
 import com.thinkenterprise.domain.route.graphql.publisher.RouteSubscriptionNotifier;
-import com.thinkenterprise.domain.route.jpa.model.Route;
-import com.thinkenterprise.domain.route.jpa.model.repository.RouteRepository;
+import com.thinkenterprise.domain.route.model.jpa.Route;
+import com.thinkenterprise.domain.route.model.jpa.RouteRepository;
+import com.thinkenterprise.graphql.error.CustomGraphQLError;
 
+import graphql.GraphQLError;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 
 /**  
@@ -67,5 +71,13 @@ public class RootMutationResolver implements GraphQLMutationResolver {
         routeRepository.deleteById(id);
         return true;
     }
+    
+    
+	
+	
+	@ExceptionHandler(ConstraintViolationException.class)
+	public GraphQLError exception(ConstraintViolationException routeException) {
+		return new CustomGraphQLError("CustomGraphQLError: Exception Handler");
+	}
 
 }

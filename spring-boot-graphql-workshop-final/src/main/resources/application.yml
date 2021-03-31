@@ -21,14 +21,14 @@ graphql:
     subscriptions:
       websocket:
         path: /subscriptions
-    exception-handlers-enabled: true
+    #exception-handlers-enabled: true
     #maxQueryDepth: 100
     #maxQueryComplexity: 100
-    corsEnabled: true
-    cors:
-      allowed-origins: http://some.domain.com
-    tracingEnabled: true
-    actuator-metrics: true
+    #corsEnabled: false
+    #cors:
+    #  allowed-origins: http://some.domain.com
+    #tracingEnabled: false
+    #actuator-metrics: false
   
 ## JPA Database Configuration 
 spring:

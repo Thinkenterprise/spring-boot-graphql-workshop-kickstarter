@@ -1,4 +1,4 @@
-package com.thinkenterprise.domain.employee.jpa.model;
+package com.thinkenterprise.domain.employee.model.jpa;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,8 +7,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
-import com.thinkenterprise.domain.jpa.AbstractEntity;
-import com.thinkenterprise.domain.route.jpa.model.Flight;
+import com.thinkenterprise.domain.model.jpa.AbstractEntity;
+import com.thinkenterprise.domain.route.model.jpa.Flight;
 
 /**  
 * GraphQL Spring Boot Training 
