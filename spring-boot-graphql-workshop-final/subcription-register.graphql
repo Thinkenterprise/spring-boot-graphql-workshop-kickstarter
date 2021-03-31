@@ -1,6 +1,0 @@
-subscription {registerRouteCreated{id flightNumber}}
-mutation createRoute {createRoute(flightNumber:"LH410") {id flightNumber}}
-
-
-
-

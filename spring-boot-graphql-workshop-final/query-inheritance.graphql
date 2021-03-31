@@ -1,1 +1,0 @@
-query{routes{id flights{id employees {id ...on Pilot{ certificateNumber}}}}}
